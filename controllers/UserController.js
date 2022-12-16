@@ -4,8 +4,6 @@ import UserModel from "../models/User.js";
 
 export const register = async (req, res) => {
   try {
-    
-
     const password = req.body.password; //mer sovorakan parolna vor usery uxarkuma
     const salt = await bcrypt.genSalt(10); //salty et inch vor paroly esiminch anelu hamara vor apahov exni eli(encrypt)
     const hash = await bcrypt.hash(password, salt); //hash enq anum paroly saltov
