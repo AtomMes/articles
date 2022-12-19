@@ -2,43 +2,50 @@ import PostModel from "../models/Post.js";
 
 export const getAll = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate("user").exec();
+    const posts = await PostModel.find() //asumenq vor bolory gtni
+
+      //es 2y hastat chen, bayc es tenc em jogel
+      .populate("user") //bolorin user i het kpcni(usery et modelneri meja eli,)
+      .exec(); //u et danninery hety veradardzni
 
     res.json(posts);
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Failed to get articles",
+      message: "chstacvec posty stexcel",
     });
   }
 };
 
 export const getOne = async (req, res) => {
   try {
-    const postId = req.params.id;
+    const postId = req.params.id; //  /post/:id-i id-n enq stanum
 
     PostModel.findOneAndUpdate(
       {
-        _id: postId,
+        //meky qti u update ara
+        _id: postId, //asumeqn et yst inchi qtni, asumenq vor dar id-n havasar exni postId-in
       },
       {
-        $inc: {
-          viewsCount: 1,
-        },
+        //2rd parametrov asum enq te inchy update ani
+        $inc: { viewsCount: 1 }, //asumeqn vor increment ani(avelacni) viewscounty 1ov
       },
       {
-        returnDocument: "after",
+        returnDocument: "after", //asumenq vor voch te prost abnavit enq anum ayl abnavit enq anum u abnavit aracy het qcum db
       },
       (err, doc) => {
         if (err) {
+          //ete error exni
           console.log(err);
           return res.status(500).json({
-            message: "Failed to get article",
+            message: "chstacvec posty veradardznel",
           });
         }
+
         if (!doc) {
+          //ete dakument chexni tenc
           return res.status(404).json({
-            message: "Article is not found",
+            message: "tenc post chka",
           });
         }
 
@@ -48,39 +55,14 @@ export const getOne = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Failed to get articles",
-    });
-  }
-};
-export const update = async (req, res) => {
-  try {
-    const postId = req.params.id;
-
-    await PostModel.findOneAndUpdate(
-      {
-        _id: postId,
-      },
-      {
-        title: req.body.title,
-        text: req.body.text,
-        imageUrl: req.body.imageUrl,
-        user: req.userId,
-        tags: req.body.tags,
-      }
-    );
-
-    res.json({ success: true });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Failed to update the article",
+      message: "chstacvec post stexcel",
     });
   }
 };
 
 export const remove = async (req, res) => {
   try {
-    const postId = req.params.id;
+    const postId = req.params.id; //  /post/:id-i id-n enq stanum
 
     PostModel.findOneAndDelete(
       {
@@ -88,16 +70,15 @@ export const remove = async (req, res) => {
       },
       (err, doc) => {
         if (err) {
+          //ete error exni
           console.log(err);
           return res.status(500).json({
-            message: "Failed to remove article",
+            message: "chstacvec posty jnjel",
           });
         }
-
         if (!doc) {
-          console.log(err);
           return res.status(404).json({
-            message: "Article is not found",
+            message: "tenc post chka",
           });
         }
 
@@ -109,7 +90,33 @@ export const remove = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Failed to get articles",
+      message: "chstacvec post stexcel",
+    });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    await PostModel.findOneAndUpdate(
+      {
+        _id: postId, //asumeqn te vonc enq gtnelu
+      },
+      {
+        //asumenq te inchn enq popoxelu
+        title: req.body.title,
+        text: req.body.text,
+        imageUrl: req.body.imageUrl,
+        tags: req.body.tags,
+        user: req.userId,
+      }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "chstacvec post popoxel",
     });
   }
 };
@@ -121,7 +128,7 @@ export const create = async (req, res) => {
       text: req.body.text,
       imageUrl: req.body.imageUrl,
       tags: req.body.tags,
-      user: req.userId,
+      user: req.userId, //esmeky body-ic chenq qashum vorovhetev checkAuthica galis userId-n
     });
 
     const post = await doc.save();
@@ -130,7 +137,7 @@ export const create = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: "Failed to create a post",
+      message: "chstacvec post stexcel",
     });
   }
 };

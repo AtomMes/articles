@@ -1,22 +1,28 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true,
+const UserSchema = mongoose.Schema(
+  //en amen inchy inch vor petqa partadir unena
+  {
+    fullName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    avatarUrl: String,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+  {//asumenq inqy iranic inch partadir saxin avelacni
+    timestamps:true//xosqi es pahin asumenq vor saxin data sozdanya avelacni avtomat
   },
-  passwordHash:{
-    type:String,
-    required:true
-  },
-  avatarUrl:String
-},{
-    timestamps:true,
-});
+
+);
+
 
 export default mongoose.model('User', UserSchema)
