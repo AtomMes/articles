@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import multer from "multer"; //nkarneri xranilishya-i hamara
+import cors from "cors"; //nra hamara vor urish domenic karenan zapros anen(xosqi localhost 3000ic reakti hamar)
 import {
   registerValidation,
   loginValidation,
@@ -32,6 +33,7 @@ const upload = multer({ storage }); //senvel voncor asumenq vor multeri storagen
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads")); //asum enq ete uploadsin mi ban gna tes ete uploads papkum et fayly unenq et cuyc tu(vor brauzerum cuyc ta nkary)
+app.use(cors()); //kpcnum enq korsy prost sovorakan dzevov
 
 app.post(
   "/auth/login",
@@ -53,6 +55,7 @@ app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
     url: `/uploads/${req.file.originalname}`,
   });
 });
+app.get("/tags", PostController.getLastTags);
 
 app.get("/posts", PostController.getAll);
 app.get("/posts/:id", PostController.getOne);

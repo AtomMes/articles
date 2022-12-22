@@ -1,5 +1,28 @@
 import PostModel from "../models/Post.js";
 
+export const getLastTags = async (req, res) => {
+  try {
+    const posts = await PostModel.find() //asumenq vor bolory gtni
+
+      //es 2y hastat chen, bayc es tenc em jogel
+      .limit(5) //prost asumenq amenashaty 5 haty veradardzru
+      .exec(); //u et danninery hety veradardzni
+
+    const tags = posts
+      .map((obj) => obj.tags)
+      .flat() //vor meji andamnerin sax mi masivi mej qci
+      .slice(0, 5);
+    console.log(tags, posts);
+
+    res.json(tags);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "chstacvec tegery qashel",
+    });
+  }
+};
+
 export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find() //asumenq vor bolory gtni
@@ -51,7 +74,7 @@ export const getOne = async (req, res) => {
 
         res.json(doc);
       }
-    );
+    ).populate("user");
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -108,7 +131,7 @@ export const update = async (req, res) => {
         title: req.body.title,
         text: req.body.text,
         imageUrl: req.body.imageUrl,
-        tags: req.body.tags,
+        tags: req.body.tags.split(","),
         user: req.userId,
       }
     );
@@ -127,7 +150,7 @@ export const create = async (req, res) => {
       title: req.body.title,
       text: req.body.text,
       imageUrl: req.body.imageUrl,
-      tags: req.body.tags,
+      tags: req.body.tags.split(","),
       user: req.userId, //esmeky body-ic chenq qashum vorovhetev checkAuthica galis userId-n
     });
 
