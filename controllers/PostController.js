@@ -25,11 +25,11 @@ export const getLastTags = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const posts = await PostModel.find() //asumenq vor bolory gtni
+    const posts = await PostModel.find(); //asumenq vor bolory gtni
 
-      //es 2y hastat chen, bayc es tenc em jogel
-      .populate("user") //bolorin user i het kpcni(usery et modelneri meja eli,)
-      .exec(); //u et danninery hety veradardzni
+    //es 2y hastat chen, bayc es tenc em jogel
+    // .populate("user") //bolorin user i het kpcni(usery et modelneri meja eli,)
+    //  .exec(); //u et danninery hety veradardzni
 
     res.json(posts);
   } catch (err) {

@@ -21,7 +21,7 @@ export const registerValidation = [
 ];
 
 export const postCreateValidation = [
-  body("title", "vernagir tur").isLength({ min: 3 }).isString(),
+  body("question", "harc tur").isLength({ min: 3 }).isString(),
   body("text", "text gri").isLength({ min: 10 }).isString(),
   body("tags", "massiv petqa exni").optional().isString(),
   body("imageUrl", "ssilkaya petq").optional().isString(),
