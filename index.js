@@ -11,7 +11,8 @@ import { UserController, PostController } from "./controllers/index.js";
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
 mongoose
   .connect(
-    "mongodb+srv://atom:atom@cluster0.reg8m3g.mongodb.net/blog?retryWrites=true&w=majority" //.net/ ic heto grum enq blog, vor menq stexan xosqi user porcenq saxranit anenq db-um inqy miangamic jogi vor uzerneri hmar petqa papka sarqi senc asac
+    // "mongodb+srv://atom:atom@cluster0.reg8m3g.mongodb.net/blog?retryWrites=true&w=majority"
+   process.env.PLATOON_URI //.net/ ic heto grum enq blog, vor menq stexan xosqi user porcenq saxranit anenq db-um inqy miangamic jogi vor uzerneri hmar petqa papka sarqi senc asac
   )
   .then(() => console.log("DB is ready"))
   .catch((err) => console.log("DB Error", err));
@@ -75,7 +76,7 @@ app.patch(
   PostController.update
 );
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }
